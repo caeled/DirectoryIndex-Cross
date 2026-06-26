@@ -26,8 +26,8 @@ modules:
     buildsystem: simple
     subdir: DirectoryIndexGenerator
     build-commands:
-      - dotnet restore DirectoryIndexGenerator.csproj --source ./nuget-packages -r linux-x64 --disable-parallel
-      - dotnet publish DirectoryIndexGenerator.csproj -c Release -r linux-x64 --self-contained false -o /app/bin
+      - dotnet restore DirectoryIndexGenerator.csproj --source ./nuget-packages
+      - dotnet publish DirectoryIndexGenerator.csproj -c Release -r linux-x64 --self-contained false --no-restore -o /app/bin
       - install -Dm644 Linux/com.stevepowell.directoryindexgenerator.desktop /app/share/applications/com.stevepowell.directoryindexgenerator.desktop
       - install -Dm644 Linux/com.stevepowell.directoryindexgenerator.png /app/share/icons/hicolor/256x256/apps/com.stevepowell.directoryindexgenerator.png
     sources:
