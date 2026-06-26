@@ -112,7 +112,7 @@ public class MainViewModel : INotifyPropertyChanged
     public bool HasOutput
     {
         get => _hasOutput;
-        set { _hasOutput = value; OnPropertyChanged(); }
+        set { _hasOutput = value; OnPropertyChanged(); (OpenOutputCommand as RelayCommand)?.RaiseCanExecuteChanged(); }
     }
 
     public IBrush DropZoneBorderBrush     => _isDragOver ? DragBorder     : NormalBorder;
