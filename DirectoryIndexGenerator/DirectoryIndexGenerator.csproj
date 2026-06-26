@@ -8,6 +8,7 @@
     <RootNamespace>DirectoryIndexGenerator</RootNamespace>
     <AssemblyName>DirectoryIndexGenerator</AssemblyName>
     <RuntimeIdentifiers>win-x64;osx-x64;osx-arm64;linux-x64</RuntimeIdentifiers>
+    <RuntimeFrameworkVersion>8.0.28</RuntimeFrameworkVersion>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
