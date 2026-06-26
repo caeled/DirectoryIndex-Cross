@@ -4,8 +4,8 @@
         x:Class="DirectoryIndexGenerator.MainWindow"
         x:DataType="vm:MainViewModel"
         Title="Directory Index Generator"
-        Width="820" Height="600"
-        MinWidth="680" MinHeight="480"
+        Width="820" Height="700"
+        MinWidth="680" MinHeight="580"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundBrush}">
 
