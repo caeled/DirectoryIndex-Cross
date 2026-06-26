@@ -76,6 +76,7 @@ public class MainViewModel : INotifyPropertyChanged
             OnPropertyChanged();
             OnPropertyChanged(nameof(SelectedFolderName));
             OnPropertyChanged(nameof(HasFolder));
+            (GenerateCommand as AsyncRelayCommand)?.RaiseCanExecuteChanged();
         }
     }
     public string SelectedFolderName =>
