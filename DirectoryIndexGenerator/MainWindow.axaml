@@ -1,0 +1,184 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:DirectoryIndexGenerator.ViewModels"
+        x:Class="DirectoryIndexGenerator.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Directory Index Generator"
+        Width="820" Height="600"
+        MinWidth="680" MinHeight="480"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid ColumnDefinitions="260,*">
+
+        <!-- ── LEFT SIDEBAR ── -->
+        <Border Grid.Column="0"
+                Background="{StaticResource SidebarBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,1,0">
+            <DockPanel>
+
+                <!-- Bottom-pinned action buttons -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="20,0,20,20">
+                    <Separator Margin="0,0,0,16" Background="{StaticResource BorderBrush}"/>
+                    <Button Content="▶  Generate index.html"
+                            Command="{Binding GenerateCommand}"
+                            Classes="primary"
+                            IsEnabled="{Binding !IsBusy}"
+                            HorizontalAlignment="Stretch"/>
+                    <Button Content="Open Output Folder"
+                            Command="{Binding OpenOutputCommand}"
+                            Classes="secondary"
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Stretch"
+                            IsVisible="{Binding HasOutput}"/>
+                    <Button Content="?  How to Use"
+                            Command="{Binding HowToUseCommand}"
+                            Classes="secondary"
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <!-- Scrollable settings -->
+                <ScrollViewer>
+                    <StackPanel Margin="20,24,20,20">
+
+                        <TextBlock Text="Directory Index" Classes="title"/>
+                        <TextBlock Text="Generator" Classes="title" Margin="0,-6,0,24"/>
+
+                        <TextBlock Text="PAGE TITLE" Classes="label"/>
+                        <TextBox Text="{Binding PageTitle}" Margin="0,4,0,16"/>
+
+                        <TextBlock Text="AUTHOR NAME" Classes="label"/>
+                        <TextBox Text="{Binding AuthorName}" Margin="0,4,0,16"/>
+
+                        <TextBlock Text="HEADER IMAGE (OPTIONAL)" Classes="label"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,4">
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding HeaderImagePath}"
+                                     IsReadOnly="True"
+                                     Margin="0,0,6,0"/>
+                            <Button Grid.Column="1"
+                                    Content="Browse"
+                                    Command="{Binding BrowseImageCommand}"
+                                    Classes="secondary"
+                                    Width="64"
+                                    Padding="0,6"/>
+                        </Grid>
+
+                        <!-- Image options — visible when image selected -->
+                        <StackPanel IsVisible="{Binding HasHeaderImage}" Margin="0,8,0,0">
+                            <TextBlock Text="IMAGE STYLE" Classes="label"/>
+                            <ComboBox ItemsSource="{Binding ImageStyles}"
+                                      SelectedItem="{Binding SelectedImageStyle}"
+                                      Margin="0,4,0,8"
+                                      HorizontalAlignment="Stretch"/>
+
+                            <TextBlock Text="IMAGE HEIGHT (PX)" Classes="label"/>
+                            <TextBox Text="{Binding ImageHeight}" Margin="0,4,0,8"/>
+
+                            <TextBlock Text="OVERLAY TEXT (OPTIONAL)" Classes="label"/>
+                            <TextBox Text="{Binding ImageOverlayText}" Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <!-- ── RIGHT PANEL ── -->
+        <Grid Grid.Column="1" RowDefinitions="*,Auto">
+
+            <!-- Drop zone -->
+            <Border Grid.Row="0"
+                    Margin="32"
+                    CornerRadius="12"
+                    BorderThickness="2"
+                    BorderBrush="{Binding DropZoneBorderBrush}"
+                    Background="{Binding DropZoneBackgroundBrush}"
+                    x:Name="DropZone">
+
+                <Grid>
+                    <!-- Empty state -->
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                IsVisible="{Binding !HasFolder}">
+                        <TextBlock Text="📁" FontSize="48"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,16"/>
+                        <TextBlock Text="Drop a folder here"
+                                   Classes="drop-hint"
+                                   Margin="0,0,0,6"/>
+                        <TextBlock Text="or" Classes="muted"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,6,0,6"/>
+                        <Button Content="Browse for folder"
+                                Command="{Binding BrowseFolderCommand}"
+                                Classes="link"
+                                HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Folder selected state -->
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                IsVisible="{Binding HasFolder}">
+                        <TextBlock Text="📂" FontSize="48"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding SelectedFolderName}"
+                                   Classes="drop-hint accent"
+                                   Margin="0,0,0,4"/>
+                        <TextBlock Text="{Binding SelectedFolderPath}"
+                                   Classes="muted"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="340"
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,16"/>
+                        <Button Content="Change folder"
+                                Command="{Binding BrowseFolderCommand}"
+                                Classes="link"
+                                HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Busy overlay -->
+                    <Border IsVisible="{Binding IsBusy}"
+                            Background="#CC1E1E2E"
+                            CornerRadius="12">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <ProgressBar IsIndeterminate="True"
+                                         Width="200"
+                                         Margin="0,0,0,16"/>
+                            <TextBlock Text="{Binding StatusMessage}"
+                                       HorizontalAlignment="Center"
+                                       Foreground="White"
+                                       FontSize="13"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Status bar -->
+            <Border Grid.Row="1"
+                    Background="{StaticResource SidebarBrush}"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="16,8">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0"
+                               Text="{Binding StatusMessage}"
+                               Classes="muted"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding FileCountMessage}"
+                               Classes="muted"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

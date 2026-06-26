@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DirectoryIndexGenerator.HelpWindow"
+        Title="How to Use — Directory Index Generator"
+        Width="560" Height="620"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}"
+        CanResize="False">
+
+    <Grid Margin="28,24,28,24" RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="How to Use" Classes="title"/>
+            <TextBlock Text="Directory Index Generator"
+                       Foreground="{StaticResource AccentBrush}"
+                       FontSize="13" Margin="0,2,0,0"/>
+        </StackPanel>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <TextBlock Text="QUICK START" Classes="help-section"/>
+                <TextBlock Classes="help-body">
+                    1. Drop a folder onto the right panel, or click Browse for folder.
+                    2. Fill in a Page Title and Author Name in the sidebar.
+                    3. Click ▶ Generate index.html.
+                    4. Open the generated index.html in any browser.
+                </TextBlock>
+
+                <TextBlock Text="HEADER IMAGE (OPTIONAL)" Classes="help-section"/>
+                <TextBlock Classes="help-body"
+                           Text="Click Browse next to Header Image to add a banner or logo.&#10;&#10;Cover — small image pinned left, content flows to the right.&#10;Contain — image centred, full width preserved.&#10;Tile — same as Contain (use for square logos).&#10;Banner — full-width cropped hero image at the top of the page."/>
+
+                <TextBlock Text="VIEWS" Classes="help-section"/>
+                <TextBlock Classes="help-body"
+                           Text="The generated page auto-selects the best view based on your content:&#10;&#10;Explorer — sortable table, works for any file types.&#10;Audio — vinyl-disc player with playlist (triggered by >40% audio files).&#10;Video — thumbnail grid with lightbox player.&#10;Bookshelf — cover-art grid for EPUBs and PDFs.&#10;&#10;You can switch views manually using the icons in the top-right of the page."/>
+
+                <TextBlock Text="METADATA" Classes="help-section"/>
+                <TextBlock Classes="help-body"
+                           Text="MP3 files — title, artist, and album are read from ID3v2 tags automatically.&#10;EPUB files — title and author are read from the OPF metadata. Cover images are extracted to a .cover.jpg sidecar file alongside the EPUB."/>
+
+                <TextBlock Text="FOLDER NAVIGATION" Classes="help-section"/>
+                <TextBlock Classes="help-body"
+                           Text="An index.html is written into every subfolder automatically. Clicking a folder on the page navigates into it; a Back button returns to the parent. The pages work entirely via the file:// protocol — no web server needed."/>
+
+                <TextBlock Text="TIPS" Classes="help-section"/>
+                <TextBlock Classes="help-body"
+                           Text="• Place a file named cover.jpg, folder.jpg, or front.jpg in any subfolder to give it a thumbnail.&#10;• The generated pages include a built-in dark / light mode toggle.&#10;• Re-running on the same folder simply overwrites the existing index files.&#10;• The .thumbs folder is hidden automatically and never appears in the index."/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Close -->
+        <Button Grid.Row="2"
+                Content="Close"
+                Classes="secondary"
+                Width="100"
+                HorizontalAlignment="Right"
+                Margin="0,20,0,0"
+                Click="Close_Click"/>
+    </Grid>
+</Window>

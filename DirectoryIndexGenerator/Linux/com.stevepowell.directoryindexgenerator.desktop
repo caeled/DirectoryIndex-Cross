@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Directory Index Generator
+Comment=Generate browsable HTML indexes for any folder
+Exec=DirectoryIndexGenerator
+Icon=com.stevepowell.directoryindexgenerator
+Terminal=false
+Type=Application
+Categories=Utility;FileManager;
+Keywords=index;html;folder;browser;
